@@ -59,6 +59,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--gray-50);
@@ -228,19 +232,29 @@
             margin-bottom: 2rem;
             border: 1px solid var(--gray-200);
             display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
         }
 
         .selected-package-info.show {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .payment-section {
             margin-bottom: 2rem;
             display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
         }
 
         .payment-section.show {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .payment-title {
@@ -436,15 +450,16 @@
                             <div class="package-price">$99 <span class="package-currency">MXN</span></div>
                         </div>
                         <ul class="package-features">
-                            <li><span class="feature-icon">✓</span> <strong>12.5 horas</strong> de video bajo demanda</li>
-                            <li><span class="feature-icon">✓</span> <strong>33 artículos</strong> técnicos especializados</li>
-                            <li><span class="feature-icon">✓</span> <strong>45 recursos descargables</strong> profesionales</li>
-                            <li><span class="feature-icon">✓</span> <strong>Instalador SolidWorks</strong> oficial incluido</li>
-                            <li><span class="feature-icon">✓</span> Acceso en <strong>móviles y TV</strong></li>
+                            <li><span class="feature-icon">✓</span> <strong>12.5 horas de video</strong></li>
+                            <li><span class="feature-icon">✓</span> <strong>33 artículos técnicos especializados</strong></li>
+                            <li><span class="feature-icon">✓</span> <strong>45 recursos descargables</strong></li>
+                            <li><span class="feature-icon">✓</span> <strong>Acceso en móviles y TV</strong></li>
                             <li><span class="feature-icon">✓</span> De <strong>cero a certificación CSWA</strong> internacional</li>
                             <li><span class="feature-icon">✓</span> <strong>Acceso de por vida</strong> + actualizaciones</li>
                             <li><span class="feature-icon">✓</span> <strong>Certificado de finalización</strong></li>
                             <li><span class="feature-icon">✓</span> <strong>Garantía 30 días</strong> sin preguntas</li>
+                            <li><span class="feature-icon">❌</span><s> <strong>Asesoría personalizada para resolver dudas</strong></s></li>
+
                         </ul>
                     </div>
 
@@ -463,7 +478,7 @@
                             <li><span class="premium-feature">★</span> <strong>Preparación intensiva CSWA</strong></li>
                             <li><span class="premium-feature">★</span> <strong>Simulacros de examen</strong></li>
                             <li><span class="premium-feature">★</span> <strong>Garantía de aprobación</strong> CSWA</li>
-                            <li><span class="premium-feature">★</span> <strong>Mentoring profesional</strong> continuo</li>
+                            <li><span class="premium-feature">★</span> <strong>Mentoring profesional continuo</strong></li>
                             <li><span class="premium-feature">★</span> <strong>Único pago</strong>desde cero hasta que termines tu curso</li>
                         </ul>
                     </div>
@@ -574,6 +589,19 @@
             
             // Update payment info
             updatePaymentInfo();
+            
+            // Scroll to the selected package info with a small delay for animation
+            setTimeout(() => {
+                const packageInfo = document.getElementById('packageInfo');
+                const offset = 20; // Pequeño margen superior
+                const elementPosition = packageInfo.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }, 200);
         }
 
         function updatePackageSummary() {
