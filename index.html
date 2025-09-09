@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Compra - Diego Gaona</title>
+
+     <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '373277814132384');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=373277814132384&ev=PageView&noscript=1"
+    /></noscript>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RN68VLQLTW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-RN68VLQLTW');
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --white: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-800);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .checkout-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .packages-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .package-card {
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            background: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .package-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .package-card.selected {
+            border-color: var(--primary);
+            background: #f0f7ff;
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .package-card.premium {
+            border-color: var(--warning);
+            position: relative;
+        }
+
+        .package-card.premium.selected {
+            border-color: var(--warning);
+            background: #fefbf0;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--warning);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .package-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .package-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .package-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .package-card.premium .package-price {
+            color: var(--warning);
+        }
+
+        .package-currency {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        .package-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .package-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .package-features li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .premium-feature {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        .selected-package-info {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-200);
+            display: none;
+        }
+
+        .selected-package-info.show {
+            display: block;
+        }
+
+        .payment-section {
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .payment-section.show {
+            display: block;
+        }
+
+        .payment-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bank-info {
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bank-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .bank-detail:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .bank-label {
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+
+        .bank-value {
+            font-weight: 600;
+            color: var(--gray-900);
+            font-family: monospace;
+            font-size: 1rem;
+        }
+
+        .copy-btn {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 0.5rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--gray-200);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .instructions {
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .instructions h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .instructions ol {
+            padding-left: 1.5rem;
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+
+        .whatsapp-section {
+            text-align: center;
+        }
+
+        .whatsapp-btn {
+            background: #25d366;
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow);
+        }
+
+        .whatsapp-btn:hover {
+            background: #22c55e;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .support-text {
+            margin-top: 1.5rem;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            text-align: center;
+        }
+
+        .select-package-msg {
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 1.125rem;
+            padding: 2rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            border: 2px dashed var(--gray-300);
+        }
+
+        @media (max-width: 768px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            body {
+                padding: 1rem 0.5rem;
+            }
+            
+            .checkout-container {
+                margin: 0;
+            }
+            
+            .header, .content {
+                padding: 1.5rem;
+            }
+            
+            .bank-detail {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .bank-value {
+                font-size: 0.875rem;
+            }
+
+            .package-price {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="header">
+            <h1>Elige tu Opción</h1>
+            <p>Curso de SolidWorks: de Cero a Certificación CSWA</p>
+        </div>
+        
+        <div class="content">
+            <div class="packages-section">
+                <h2 class="section-title">Selecciona la Opción que Más te Convenga</h2>
+                
+                <div class="packages-grid">
+                    <!-- Acceso Completo -->
+                    <div class="package-card" onclick="selectPackage('complete', 99)">
+                        <div class="package-header">
+                            <h3 class="package-title">Acceso al Curso Completo</h3>
+                            <div class="package-price">$99 <span class="package-currency">MXN</span></div>
+                        </div>
+                        <ul class="package-features">
+                            <li><span class="feature-icon">✓</span> <strong>12.5 horas</strong> de video bajo demanda</li>
+                            <li><span class="feature-icon">✓</span> <strong>33 artículos</strong> técnicos especializados</li>
+                            <li><span class="feature-icon">✓</span> <strong>45 recursos descargables</strong> profesionales</li>
+                            <li><span class="feature-icon">✓</span> <strong>Instalador SolidWorks</strong> oficial incluido</li>
+                            <li><span class="feature-icon">✓</span> Acceso en <strong>móviles y TV</strong></li>
+                            <li><span class="feature-icon">✓</span> De <strong>cero a certificación CSWA</strong> internacional</li>
+                            <li><span class="feature-icon">✓</span> <strong>Acceso de por vida</strong> + actualizaciones</li>
+                            <li><span class="feature-icon">✓</span> <strong>Certificado de finalización</strong></li>
+                            <li><span class="feature-icon">✓</span> <strong>Garantía 30 días</strong> sin preguntas</li>
+                        </ul>
+                    </div>
+
+                    <!-- Paquete Premium -->
+                    <div class="package-card premium" onclick="selectPackage('premium', 299)">
+                        <div class="popular-badge">Más Popular</div>
+                        <div class="package-header">
+                            <h3 class="package-title">Paquete Premium</h3>
+                            <div class="package-price">$299 <span class="package-currency">MXN</span></div>
+                        </div>
+                        <ul class="package-features">
+                            <li><span class="feature-icon">✓</span> <strong>Todo lo del curso completo</strong></li>
+                            <li><span class="premium-feature">★</span> <strong>Asesoría 1 a 1</strong> con el instructor</li>
+                            <li><span class="premium-feature">★</span> <strong>Soporte por WhatsApp</strong></li>
+                            <li><span class="premium-feature">★</span> <strong>Revisión de proyectos</strong> del curso</li>
+                            <li><span class="premium-feature">★</span> <strong>Preparación intensiva CSWA</strong></li>
+                            <li><span class="premium-feature">★</span> <strong>Simulacros de examen</strong></li>
+                            <li><span class="premium-feature">★</span> <strong>Garantía de aprobación</strong> CSWA</li>
+                            <li><span class="premium-feature">★</span> <strong>Mentoring profesional</strong> continuo</li>
+                            <li><span class="premium-feature">★</span> <strong>Único pago</strong>desde cero hasta que termines tu curso</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="select-package-msg" id="selectMessage">
+                    👆 Haz clic en el paquete que prefieras para continuar con el pago
+                </div>
+            </div>
+
+            <div class="selected-package-info" id="packageInfo">
+                <h3>Resumen de tu Compra</h3>
+                <div id="packageSummary"></div>
+            </div>
+
+            <div class="payment-section" id="paymentSection">
+                <h2 class="payment-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    Datos para Transferencia
+                </h2>
+                
+                <div class="bank-info">
+                    <div class="bank-detail">
+                        <span class="bank-label">Banco:</span>
+                        <span class="bank-value">
+                            BBVA México
+                            <button class="copy-btn" onclick="copyText('BBVA México')">Copiar</button>
+                        </span>
+                    </div>
+                    <div class="bank-detail">
+                        <span class="bank-label">Titular:</span>
+                        <span class="bank-value">
+                            Diego Armando Gaona Ramírez
+                            <button class="copy-btn" onclick="copyText('Diego Armando Gaona Ramírez')">Copiar</button>
+                        </span>
+                    </div>
+                    <div class="bank-detail">
+                        <span class="bank-label">CLABE:</span>
+                        <span class="bank-value">
+                            012210028972966223
+                            <button class="copy-btn" onclick="copyText('012210028972966223')">Copiar</button>
+                        </span>
+                    </div>
+                    <div class="bank-detail">
+                        <span class="bank-label">Concepto:</span>
+                        <span class="bank-value" id="paymentConcept">
+                            Paquete SolidWorks
+                            <button class="copy-btn" onclick="copyText(document.getElementById('paymentConcept').childNodes[0].textContent.trim())">Copiar</button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3>Instrucciones de Pago</h3>
+                    <ol>
+                        <li>Realiza la transferencia por <strong id="paymentAmount">$99 MXN</strong> a la cuenta mostrada arriba</li>
+                        <li>Toma una captura de pantalla del comprobante de transferencia</li>
+                        <li>Haz clic en el botón de WhatsApp para enviarnos tu comprobante</li>
+                        <li>Recibirás tu paquete completo en menos de 2 horas</li>
+                        <li><strong>✅ Garantía:</strong> Si el contenido no es lo que esperabas, solicita tu reembolso completo</li>
+                    </ol>
+                </div>
+
+                <div class="whatsapp-section">
+                    <a href="#" id="whatsappBtn" class="whatsapp-btn" target="_blank">
+                        <svg class="whatsapp-icon" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.63"/>
+                        </svg>
+                        Enviar Comprobante por WhatsApp
+                    </a>
+                    
+                    <p class="support-text">
+                        ¿Tienes alguna duda? Contáctanos por WhatsApp<br>
+                        Horario de atención: 9:00 AM - 11:00 PM (México)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedPackage = null;
+        let selectedPrice = 0;
+
+        function selectPackage(packageType, price) {
+            // Remove previous selection
+            document.querySelectorAll('.package-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked package
+            event.currentTarget.classList.add('selected');
+            
+            selectedPackage = packageType;
+            selectedPrice = price;
+            
+            // Hide select message
+            document.getElementById('selectMessage').style.display = 'none';
+            
+            // Show package info and payment section
+            document.getElementById('packageInfo').classList.add('show');
+            document.getElementById('paymentSection').classList.add('show');
+            
+            // Update package summary
+            updatePackageSummary();
+            
+            // Update payment info
+            updatePaymentInfo();
+        }
+
+        function updatePackageSummary() {
+            const packageSummary = document.getElementById('packageSummary');
+            
+            if (selectedPackage === 'complete') {
+                packageSummary.innerHTML = `
+                    <div style="border: 2px solid var(--primary); border-radius: var(--border-radius); padding: 1rem; background: #f0f7ff;">
+                        <h4 style="color: var(--primary); font-weight: 600; margin-bottom: 0.5rem;">Acceso al Curso Completo - $99 MXN</h4>
+                        <p style="color: var(--gray-700); font-size: 0.9rem;"><strong>12.5 horas de video + 33 artículos + 45 recursos + preparación para certificación CSWA.</strong> Todo en un solo pago.</p>
+                    </div>
+                `;
+            } else {
+                packageSummary.innerHTML = `
+                    <div style="border: 2px solid var(--warning); border-radius: var(--border-radius); padding: 1rem; background: #fefbf0;">
+                        <h4 style="color: var(--warning); font-weight: 600; margin-bottom: 0.5rem;">Paquete Premium - $299 MXN</h4>
+                        <p style="color: var(--gray-700); font-size: 0.9rem;"><strong>Curso completo + asesoría personalizada + garantía de aprobación CSWA.</strong> Tu éxito asegurado al 100%.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function updatePaymentInfo() {
+            // Update payment amount
+            document.getElementById('paymentAmount').textContent = `$${selectedPrice} MXN`;
+            
+            // Update payment concept
+            const concept = selectedPackage === 'complete' ? 'Curso SolidWorks CSWA' : 'Curso SolidWorks CSWA Premium';
+            document.getElementById('paymentConcept').innerHTML = `
+                ${concept}
+                <button class="copy-btn" onclick="copyText('${concept}')">Copiar</button>
+            `;
+            
+            // Update WhatsApp link
+            const packageName = selectedPackage === 'complete' ? 'Curso Completo de SolidWorks CSWA' : 'Paquete Premium de SolidWorks CSWA';
+            const whatsappMessage = `¡Hola! Ya realicé mi transferencia por el ${packageName} de $${selectedPrice} MXN. Adjunto mi comprobante de pago.`;
+            document.getElementById('whatsappBtn').href = `https://wa.me/5214621579719?text=${encodeURIComponent(whatsappMessage)}`;
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Find the button that was clicked
+                event.target.textContent = '¡Copiado!';
+                event.target.classList.add('copied');
+                
+                setTimeout(function() {
+                    event.target.textContent = 'Copiar';
+                    event.target.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Error al copiar: ', err);
+                alert('Texto copiado: ' + text);
+            });
+        }
+
+        // Auto-focus and select text when clicking on bank values
+        document.querySelectorAll('.bank-value').forEach(element => {
+            element.addEventListener('click', function() {
+                if (this.childNodes[0]) {
+                    const text = this.childNodes[0].textContent.trim();
+                    copyText(text);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
